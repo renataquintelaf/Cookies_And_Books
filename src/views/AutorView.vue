@@ -1,24 +1,35 @@
 <script>
+import axios from "axios";
 export default {
   data() {
     return {
-      livros: [
-        {
-          autor: "Coollen Hoover",
-        },
-      ],
+      autores: [],
       novo_autor: "",
     };
   },
+  async created() {
+    const autores = await axios.get("http://localhost:4000/autores");
+    this.autores = autores.data;
+  },
   methods: {
-    salvar() {
-      this.livros.push({
-        autor: this.novo_autor,
-      });
+    async salvar() {
+      const autor = {
+        nome: this.novo_autor,
+      };
+      const autor_criado = await axios.post(
+        "http://localhost:4000/autores",
+        autor
+      );
+      this.autores.push(autor_criado.data);
     },
-    excluir(livro) {
-      const indice = this.livros.indexOf(livro);
-      this.livros.splice(indice, 1);
+    // excluir(autor) {
+    //   const indice = this.livros.indexOf(autor);
+    //   this.livros.splice(indice, 1);
+    // },
+    async excluir(autor) {
+      await axios.delete(`http://localhost:4000/autores/${autor.id}`);
+      const indice = this.autor.indexOf(autor);
+      this.autor.splice(indice, 1);
     },
   },
 };
@@ -43,14 +54,14 @@ export default {
       <table>
         <thead>
           <tr>
-            <th>Autor</th>
+            <th>Nome</th>
             <th>Opções</th>
           </tr>
         </thead>
 
         <tbody>
-          <tr v-for="livro in livros" :key="livro.autor">
-            <td>{{ livro.autor }}</td>
+          <tr v-for="autor in autores" :key="autor.id">
+            <td>{{ autor.nome }}</td>
             <td>
               <button @click="excluir(livro)">Excluir</button>
             </td>
