@@ -2,13 +2,9 @@
 export default {
   data() {
     return {
-      livros: [
-        {
-          editora: "Seguinte",
-          ano: "2007",
-          nserie: "934765",
-        },
-      ],
+      editora: [],
+      ano: [],
+      nserie: [],
       novo_editora: "",
       novo_ano: "",
       novo_nserie: "",

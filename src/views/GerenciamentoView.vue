@@ -1,34 +1,23 @@
 <script>
-import { v4 as uuidv4 } from "uuid";
+import axios from "axios";
 export default {
   data() {
     return {
-      livros: [
-        {
-          livro: "Uma Farsa De Amor Na Espanha",
-          idioma: "Português",
-          id: "e9be6069-5a80-44f8-b2f4-8276a4162316",
-          quantidade: "5",
-        },
-      ],
+      livros: [],
+      editoras: [],
+      idiomas: [],
+      quantidades: [],
       novo_livro: "",
       novo_idioma: "",
       novo_quantidade: "",
     };
   },
+  async created() {
+    await this.buscarTodosAsEditoras();
+    const editoras = await axios.get("http://localhost:4000/editoras");
+  },
+
   methods: {
-    salvar() {
-      if (this.novo_livro !== "") {
-        const novo_id = uuidv4();
-        this.livros.push({
-          id: novo_id,
-          livro: this.novo_livro,
-          idioma: this.novo_idioma,
-          quantidade: this.novo_quantidade,
-        });
-        this.novo_livro = "";
-      }
-    },
     excluir(livro) {
       const indice = this.livros.indexOf(livro);
       this.livros.splice(indice, 1);
@@ -66,6 +55,7 @@ export default {
           <thead>
             <tr>
               <th>Livro</th>
+              <th>Editora</th>
               <th>Idioma</th>
               <th>Código</th>
               <th>Quantidade</th>
@@ -76,6 +66,7 @@ export default {
           <tbody>
             <tr v-for="livro in livros" :key="livro.autor">
               <td>{{ livro.livro }}</td>
+              <td>{{ livro.editora }}</td>
               <td>{{ livro.idioma }}</td>
               <td>{{ livro.id }}</td>
               <td>{{ livro.quantidade }}</td>
