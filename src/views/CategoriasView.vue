@@ -1,24 +1,31 @@
 <script>
+import axios from "axios";
 export default {
   data() {
     return {
-      livros: [
-        {
-          categoria: "Romance",
-        },
-      ],
+      categorias: [],
       novo_categoria: "",
     };
   },
+  async created() {
+    const categorias = await axios.get("http://localhost:4000/categorias");
+    this.categorias = categorias.data;
+  },
   methods: {
-    salvar() {
-      this.livros.push({
-        categoria: this.novo_categoria,
-      });
+    async salvar() {
+      const categoria = {
+        nome: this.novo_categoria,
+      };
+      const categoria_criado = await axios.post(
+        "http://localhost:4000/categorias",
+        categoria
+      );
+      this.categorias.push(categoria_criado.data);
     },
-    excluir(livro) {
-      const indice = this.livros.indexOf(livro);
-      this.livros.splice(indice, 1);
+    async excluir(categoria) {
+      await axios.delete(`http://localhost:4000/categorias/${categoria.id}`);
+      const indice = this.categorias.indexOf(categoria);
+      this.categorias.splice(indice, 1);
     },
   },
 };
@@ -48,10 +55,10 @@ export default {
         </thead>
 
         <tbody>
-          <tr v-for="livro in livros" :key="livro.categoria">
-            <td>{{ livro.categoria }}</td>
+          <tr v-for="categoria in categorias" :key="categoria.id">
+            <td>{{ categorias.nome }}</td>
             <td>
-              <button @click="excluir(livro)">Excluir</button>
+              <button @click="excluir(categoria)">Excluir</button>
             </td>
           </tr>
         </tbody>

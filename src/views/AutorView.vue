@@ -22,10 +22,6 @@ export default {
       );
       this.autores.push(autor_criado.data);
     },
-    // excluir(autor) {
-    //   const indice = this.livros.indexOf(autor);
-    //   this.livros.splice(indice, 1);
-    // },
     async excluir(autor) {
       await axios.delete(`http://localhost:4000/autores/${autor.id}`);
       const indice = this.autor.indexOf(autor);
