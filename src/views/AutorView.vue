@@ -46,7 +46,7 @@ export default {
       <button @click.enter="salvar">Salvar</button>
     </div>
 
-    <div class="list-times">
+    <div class="tabel">
       <table>
         <thead>
           <tr>
@@ -57,9 +57,9 @@ export default {
 
         <tbody>
           <tr v-for="autor in autores" :key="autor.id">
-            <td>{{ autor.nome }}</td>
+            <td>{{ autores.nome }}</td>
             <td>
-              <button @click="excluir(livro)">Excluir</button>
+              <button @click="excluir(autor)">Excluir</button>
             </td>
           </tr>
         </tbody>
@@ -97,7 +97,7 @@ button {
   border: transparent;
 }
 
-.list-times {
+.tabel {
   display: flex;
   justify-content: center;
 }

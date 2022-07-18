@@ -45,7 +45,7 @@ export default {
       />
       <button @click.enter="salvar">Salvar</button>
     </div>
-    <div class="list-times">
+    <div class="tabel">
       <table>
         <thead>
           <tr>
@@ -95,7 +95,7 @@ button {
   padding: 0.6rem;
 }
 
-.list-times {
+.tabel {
   display: flex;
   justify-content: center;
 }
