@@ -1,31 +1,32 @@
 <script>
-import axios from "axios";
+import AutoresApi from "@/api/autores.js";
+const AutoresApi = new AutoresApi();
 export default {
   data() {
     return {
-      autores: [],
-      novo_autor: "",
+      Autor: {},
+      Autores: [],
     };
   },
   async created() {
-    const autores = await axios.get("http://localhost:4000/autores");
-    this.autores = autores.data;
+    this.autores = await AutoresApi.buscarTodosOsAutores();
   },
   methods: {
     async salvar() {
-      const autor = {
-        nome: this.novo_autor,
-      };
-      const autor_criado = await axios.post(
-        "http://localhost:4000/autores",
-        autor
-      );
-      this.autores.push(autor_criado.data);
+      if (this.autor.id) {
+        await AutoresApi.atualizarAutor(this.autor);
+      } else {
+        await AutoresApi.adicionarAutor(this.autor);
+      }
+      this.Autores = await AutoresApi.buscarTodosOsAutores();
+      this.Autor = {};
     },
     async excluir(autor) {
-      await axios.delete(`http://localhost:4000/autores/${autor.id}`);
-      const indice = this.autor.indexOf(autor);
-      this.autor.splice(indice, 1);
+      await AutoresApi.excluirAutor(autor.id);
+      this.Autores = await AutoresApi.buscarTodosOsAutores();
+    },
+    editar(Autor) {
+      Object.assign(this.autor, Autor);
     },
   },
 };
@@ -39,7 +40,7 @@ export default {
     <div class="form-input">
       <input
         type="text"
-        v-model="novo_autor"
+        v-model="autor.nome"
         @keydown.enter="salvar"
         placeholder="Autor"
       />
@@ -57,7 +58,7 @@ export default {
 
         <tbody>
           <tr v-for="autor in autores" :key="autor.id">
-            <td>{{ autores.nome }}</td>
+            <td>{{ autor.nome }}</td>
             <td>
               <button @click="excluir(autor)">Excluir</button>
             </td>

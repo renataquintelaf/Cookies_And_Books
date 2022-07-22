@@ -24,14 +24,14 @@ const router = createRouter({
       component: () => import("../views/CategoriasView.vue"),
     },
     {
-      path: "/autor",
-      name: "autor",
-      component: () => import("../views/AutorView.vue"),
+      path: "/autores",
+      name: "autores",
+      component: () => import("../views/AutoresView.vue"),
     },
     {
-      path: "/editora",
-      name: "editora",
-      component: () => import("../views/EditoraView.vue"),
+      path: "/editoras",
+      name: "editoras",
+      component: () => import("../views/EditorasView.vue"),
     },
   ],
 });
