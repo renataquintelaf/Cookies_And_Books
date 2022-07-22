@@ -10,7 +10,7 @@ export default class AutoresApi {
     return response.data;
   }
 
-  async adicionarAutor(Autores) {
+  async adicionarAutor(autor) {
     const response = await axios.post("http://localhost:4000/autores", autor);
     return response.data;
   }
@@ -20,7 +20,7 @@ export default class AutoresApi {
     return response.data;
   }
 
-  async atualizarAutor(Autores) {
+  async atualizarAutor(autor) {
     const response = await axios.put(
       `http://localhost:4000/autores/${autor.id}`,
       autor

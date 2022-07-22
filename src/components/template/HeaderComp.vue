@@ -7,9 +7,9 @@
       <span>|</span>
       <span><RouterLink to="/categorias">Categorias</RouterLink></span>
       <span>|</span>
-      <span><RouterLink to="/autor">Autor</RouterLink></span>
+      <span><RouterLink to="/autores">Autor</RouterLink></span>
       <span>|</span>
-      <span><RouterLink to="/editora">Editora</RouterLink></span>
+      <span><RouterLink to="/editoras">Editora</RouterLink></span>
     </div>
     <div class="menu-direito">
       <span><RouterLink to="/tomeumcookie">Cookie</RouterLink></span>

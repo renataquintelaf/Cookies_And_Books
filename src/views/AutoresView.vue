@@ -1,32 +1,32 @@
 <script>
 import AutoresApi from "@/api/autores.js";
-const AutoresApi = new AutoresApi();
+const autoresApi = new AutoresApi();
 export default {
   data() {
     return {
-      Autor: {},
-      Autores: [],
+      autor: {},
+      autores: [],
     };
   },
   async created() {
-    this.autores = await AutoresApi.buscarTodosOsAutores();
+    this.autores = await autoresApi.buscarTodosOsAutores();
   },
   methods: {
     async salvar() {
       if (this.autor.id) {
-        await AutoresApi.atualizarAutor(this.autor);
+        await autoresApi.atualizarAutor(this.autor);
       } else {
-        await AutoresApi.adicionarAutor(this.autor);
+        await autoresApi.adicionarAutor(this.autor);
       }
-      this.Autores = await AutoresApi.buscarTodosOsAutores();
-      this.Autor = {};
+      this.autores = await autoresApi.buscarTodosOsAutores();
+      this.autor = {};
     },
     async excluir(autor) {
-      await AutoresApi.excluirAutor(autor.id);
-      this.Autores = await AutoresApi.buscarTodosOsAutores();
+      await autoresApi.excluirAutor(autor.id);
+      this.autores = await autoresApi.buscarTodosOsAutores();
     },
-    editar(Autor) {
-      Object.assign(this.autor, Autor);
+    editar(autor) {
+      Object.assign(this.autor, autor);
     },
   },
 };
