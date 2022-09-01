@@ -1,31 +1,32 @@
 <script>
-import axios from "axios";
+import CategoriasApi from "@/api/categorias.js";
+const categoriasApi = new CategoriasApi();
 export default {
   data() {
     return {
+      categoria: {},
       categorias: [],
-      novo_categoria: "",
     };
   },
   async created() {
-    const categorias = await axios.get("http://localhost:4000/categorias");
-    this.categorias = categorias.data;
+    this.categorias = await categoriasApi.buscarTodosOsCategorias();
   },
   methods: {
     async salvar() {
-      const categoria = {
-        nome: this.novo_categoria,
-      };
-      const categoria_criado = await axios.post(
-        "http://localhost:4000/categorias",
-        categoria
-      );
-      this.categorias.push(categoria_criado.data);
+      if (this.categoria.id) {
+        await categoriasApi.atualizarCategoria(this.categoria);
+      } else {
+        await categoriasApi.adicionarCategoria(this.categoria);
+      }
+      this.categorias = await categoriasApi.buscarTodosOsCategorias();
+      this.categoria = {};
     },
     async excluir(categoria) {
-      await axios.delete(`http://localhost:4000/categorias/${categoria.id}`);
-      const indice = this.categorias.indexOf(categoria);
-      this.categorias.splice(indice, 1);
+      await categoriasApi.excluirCategoria(categoria.id);
+      this.categorias = await categoriasApi.buscarTodosOsCategorias();
+    },
+    editar(categoria) {
+      Object.assign(this.categoria, categoria);
     },
   },
 };
